@@ -70,6 +70,7 @@ def prediction_item(item_id):
         predictions.append(model.predict(iid=item_id,uid=ui, verbose = False))
     return predictions
 
+
 def pred_movies(movie_list):
     """Maps the given favourite movies selected within the app to corresponding
     users within the MovieLens dataset.
@@ -92,9 +93,12 @@ def pred_movies(movie_list):
     for i in movie_list:
         predictions = prediction_item(item_id = i)
         predictions.sort(key=lambda x: x.est, reverse=True)
+        
         # Take the top 10 user id's from each movie with highest rankings
         for pred in predictions[:10]:
             id_store.append(pred.uid)
+
+
     # Return a list of user id's
     return id_store
 
@@ -121,8 +125,12 @@ def collab_model(movie_list,top_n=10):
     indices = pd.Series(movies_df['title'])
     movie_ids = pred_movies(movie_list)
     df_init_users = ratings_df[ratings_df['userId']==movie_ids[0]]
+
+
     for i in movie_ids :
         df_init_users=df_init_users.append(ratings_df[ratings_df['userId']==i])
+
+
     # Getting the cosine similarity matrix
     cosine_sim = cosine_similarity(np.array(df_init_users), np.array(df_init_users))
     idx_1 = indices[indices == movie_list[0]].index[0]

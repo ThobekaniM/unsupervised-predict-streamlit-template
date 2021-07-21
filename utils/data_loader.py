@@ -24,7 +24,7 @@ def load_movie_titles(path_to_movies):
         Movie titles.
 
     """
-    df = pd.read_csv(path_to_movies)
-    df = df.dropna()
-    movie_list = df['title'].to_list()
+    movies_df = pd.read_csv(path_to_movies)
+    movies_df = movies_df.dropna()
+    movie_list = movies_df['title'].to_list()
     return movie_list
